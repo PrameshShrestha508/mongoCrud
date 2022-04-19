@@ -1,6 +1,6 @@
-const Product = require("../model/Product");
-
-const product_all = async (req, res) => {
+// const Product = require("../model/Product");
+import Product from "../model/Product.js";
+export const product_all = async (req, res) => {
   try {
     const products = await Product.find();
     res.json(products);
@@ -9,7 +9,7 @@ const product_all = async (req, res) => {
   }
 };
 
-const product_details = async (req, res) => {
+export const product_details = async (req, res) => {
   try {
     const product = await Product.findById(req.params.productId);
     res.json(product);
@@ -18,7 +18,7 @@ const product_details = async (req, res) => {
   }
 };
 
-const product_create = async (req, res) => {
+export const product_create = async (req, res) => {
   const product = new Product({
     title: req.body.title,
     price: req.body.price,
@@ -33,7 +33,7 @@ const product_create = async (req, res) => {
   }
 };
 
-const product_update = async (req, res) => {
+export const product_update = async (req, res) => {
   try {
     const product = {
       title: req.body.title,
@@ -41,17 +41,17 @@ const product_update = async (req, res) => {
       image: req.body.image,
       details: req.body.details,
     };
-    const updateProduct = await product.findByIdAndUpdate(
+    const updateProduct = await Product.findByIdAndUpdate(
       { _id: req.params.productId },
       product
     );
-    res.json(updateProduct);
+    res.json(product);
   } catch (error) {
     res.json({ message: error });
   }
 };
 
-const product_delete = async (req, res) => {
+export const product_delete = async (req, res) => {
   try {
     const removeProduct = await Product.findByIdAndDelete(req.params.productId);
     res.json(removeProduct);
@@ -60,10 +60,10 @@ const product_delete = async (req, res) => {
   }
 };
 
-module.exports = {
-  product_all,
-  product_details,
-  product_create,
-  product_update,
-  product_delete,
-};
+// module.exports = {
+//   product_all,
+//   product_details,
+//   product_create,
+//   product_update,
+//   product_delete,
+// };
